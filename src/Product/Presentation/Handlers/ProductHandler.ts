@@ -16,6 +16,9 @@ import CriteriaPayload from '../../../Shared/Presentation/Validations/CriteriaPa
 import IdPayload from '../../../Shared/Presentation/Requests/IdPayload';
 // import ItemUpdatePayload from '../../Domain/Payloads/ItemUpdatePayload';
 
+import IProductDomain from '../../Domain/Entities/IProductDomain';
+import ProductAssignCategoryPayload from '../../Domain/Payloads/AssignCategoryPayload';
+
 const routerOpts: Router.IRouterOptions = {
     prefix: '/api/products'
 };
@@ -47,6 +50,18 @@ ProductHandler.get('/', AuthorizeKoaMiddleware(Permissions.PRODUCTS_LIST), async
 
     await responder.paginate(paginator, ctx, StatusCode.HTTP_OK, new ProductTransformer());
     // void await responder.send(data, ctx, StatusCode.HTTP_CREATED, new DefaultMessageTransformer("aun no hay productos" as ResponseMessageEnum));
+});
+
+ProductHandler.put('/assign-category/:id', AuthorizeKoaMiddleware(Permissions.PRODUCTS_SAVE), async(ctx: DefaultContext) =>
+{
+    const data = {
+        ...ctx.request.body,
+        id: ctx.params.id
+    };
+
+    const product: IProductDomain = await controller.assignCategory(data as ProductAssignCategoryPayload);
+
+    void await responder.send(product, ctx, StatusCode.HTTP_CREATED, new DefaultMessageTransformer(ResponseMessageEnum.UPDATED));
 });
 
 // ItemKoaHandler.get('/:id', AuthorizeKoaMiddleware(Permissions.ITEMS_SHOW), async(ctx: DefaultContext) =>

@@ -5,31 +5,39 @@ import IProductDomain from '../../Domain/Entities/IProductDomain';
 import IProductTransformer from './IProductTransformer';
 import UserMinimalDataTransformer from '../../../Auth/Presentation/Transformers/UserMinimalDataTransformer';
 
+import CategoryMinimalDataTransformer from '../../../Category/Presentation/Transformers/CategoryMinimalDataTransformer';
+
 class ProductTransformer extends Transformer
 {
     private userTransformer: UserMinimalDataTransformer;
+    private categoryTrasnformer: CategoryMinimalDataTransformer;
+
 
     constructor()
     {
         super();
         this.userTransformer = new UserMinimalDataTransformer();
+        this.categoryTrasnformer = new CategoryMinimalDataTransformer();
     }
 
-    public async transform(category: IProductDomain): Promise<IProductTransformer>
+    public async transform(product: IProductDomain): Promise<IProductTransformer>
     {
-        const createdBy = category.createdBy;
-        const lastModifiedBy = category.lastModifiedBy;
+        const createdBy = product.createdBy;
+        const lastModifiedBy = product.lastModifiedBy;
+        const category = product.category;
         dayjs.extend(utc);
 
         return {
-            id: category.getId(),
-            title: category.title,
-            price: category.price,
-            enable: category.enable,
+            id: product.getId(),
+            title: product.title,
+            price: product.price,
+            enable: product.enable,
             createdBy: createdBy ? await this.userTransformer.handle(createdBy) : null,
             lastModifiedBy: lastModifiedBy ? await this.userTransformer.handle(lastModifiedBy) : null,
-            createdAt: dayjs(category.createdAt).utc().unix(),
-            updatedAt: dayjs(category.updatedAt).utc().unix()
+            createdAt: dayjs(product.createdAt).utc().unix(),
+            updatedAt: dayjs(product.updatedAt).utc().unix(),
+            // @ts-ignore
+            category: category ? await this.categoryTrasnformer.handle(category): null,
         };
     }
 }

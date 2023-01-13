@@ -1,6 +1,6 @@
 import IUserMinimalDataTransformer from '../../../Auth/Presentation/Transformers/IUserMinimalDataTransformer';
-
-interface ICategoryTransformer
+import ICategoryTransformer from '../../../Category/Presentation/Transformers/ICategoryTransformer';
+interface IProductTransformer
 {
     id: string;
     title: string;
@@ -10,6 +10,7 @@ interface ICategoryTransformer
     lastModifiedBy: IUserMinimalDataTransformer;
     createdAt: number;
     updatedAt: number;
+    category: ICategoryTransformer;
 }
 
-export default ICategoryTransformer;
+export default IProductTransformer;

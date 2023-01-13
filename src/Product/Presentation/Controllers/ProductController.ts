@@ -21,6 +21,11 @@ import IdSchemaValidation from '../../../Shared/Presentation/Validations/IdSchem
 import RequestCriteria from '../../../Shared/Presentation/Requests/RequestCriteria';
 import ProductSchemaUpdateValidation from '../Validations/ProductSchemaUpdateValidation';
 
+import AssignCategorySchemaValidation from '../Validations/AssignCategorySchemaValidation';
+
+import AssignCategoryPayload from '../../Domain/Payloads/AssignCategoryPayload';
+import AssignCategoryUseCase from '../../Domain/UseCases/AssignCategoryUseCase';
+
 class ProductController
 {
     public async save(payload: ProductRepPayload): Promise<IProductDomain>
@@ -44,6 +49,14 @@ class ProductController
 
         const useCase = new ListProductsUseCase();
         return await useCase.handle(requestCriteria);
+    }
+
+      public async assignCategory(payload: AssignCategoryPayload): Promise<IProductDomain>
+    {
+        await ValidatorSchema.handle( AssignCategorySchemaValidation, payload);
+
+        const useCase = new AssignCategoryUseCase();
+        return await useCase.handle(payload);
     }
 
     // public async getOne(payload: IdPayload): Promise<ICategoryDomain>

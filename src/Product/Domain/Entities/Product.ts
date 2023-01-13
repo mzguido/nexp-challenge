@@ -15,6 +15,12 @@ class Product extends Base implements IProductDomain {
   constructor() {
     super();
   }
+
+  setCategory(cat: ICategoryDomain): void {
+    this.category = cat
+  }
+  // getCategory(): ICategoryDomain {
+  //  }
 }
 
 export default Product;

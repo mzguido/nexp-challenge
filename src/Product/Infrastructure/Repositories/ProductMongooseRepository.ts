@@ -11,11 +11,11 @@ import BaseMongooseRepository from '../../../Shared/Infrastructure/Repositories/
 import IProductDomain from '../../Domain/Entities/IProductDomain';
 import Product from '../../Domain/Entities/Product';
 
-class CategoryMongooseRepository extends BaseMongooseRepository<IProductDomain, IProduct> implements IProductRepository
+class ProductMongooseRepository extends BaseMongooseRepository<IProductDomain, IProduct> implements IProductRepository
 {
     constructor()
     {
-        super(Product.name, ['createdBy', 'lastModifiedBy']);
+        super(Product.name, ['createdBy', 'lastModifiedBy', 'category']);
     }
 
     async list(criteria: ICriteria): Promise<IPaginator>
@@ -60,4 +60,4 @@ class CategoryMongooseRepository extends BaseMongooseRepository<IProductDomain, 
     }
 }
 
-export default CategoryMongooseRepository;
+export default ProductMongooseRepository;

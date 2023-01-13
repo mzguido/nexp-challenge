@@ -13,6 +13,10 @@ import AuthService from './Auth/Domain/Services/AuthService';
 import IUserRepository from './Auth/Infrastructure/Repositories/IUserRepository';
 import IRoleRepository from './Auth/Infrastructure/Repositories/IRoleRepository';
 import IItemRepository from './Item/Infrastructure/Repositories/IItemRepository';
+
+import ICategoryRepository from "./Category/Infrastructure/Repositories/ICategoryRepository";
+// import IProductRepository from "./Product/Infrastructure/Repositories"
+
 import IFileVersionRepository from './File/Infrastructure/Repositories/IFileVersionRepository';
 import INotificationRepository from './Notification/Infrastructure/Repositories/INotificationRepository';
 import INotificationDomain from './Notification/Domain/Entities/INotificationDomain';
@@ -23,6 +27,9 @@ import RoleMongooseRepository from './Auth/Infrastructure/Repositories/RoleMongo
 import FileVersionMongooseRepository from './File/Infrastructure/Repositories/FileVersionMongooseRepository';
 import ItemMongooseRepository from './Item/Infrastructure/Repositories/ItemMongooseRepository';
 import NotificationMongooseRepository from './Notification/Infrastructure/Repositories/NotificationMongooseRepository';
+
+import CategoryMongooseRepository from './Category/Infrastructure/Repositories/CategoryMongooseRepository';
+
 
 import UserTypeORMRepository from './Auth/Infrastructure/Repositories/UserTypeORMRepository';
 import RoleTypeORMRepository from './Auth/Infrastructure/Repositories/RoleTypeORMRepository';
@@ -64,6 +71,10 @@ else if (defaultDbConfig === 'Mongoose')
     container.register<IFileVersionRepository>(REPOSITORIES.IFileVersionRepository, { useClass: FileVersionMongooseRepository }, { lifecycle: Lifecycle.ContainerScoped });
     container.register<IFileRepository>(REPOSITORIES.IFileRepository, { useClass: FileMongooseRepository }, { lifecycle: Lifecycle.ContainerScoped });
     container.register<INotificationRepository<INotificationDomain>>(REPOSITORIES.INotificationRepository, { useClass: NotificationMongooseRepository }, { lifecycle: Lifecycle.ContainerScoped });
+
+    container.register<ICategoryRepository>(REPOSITORIES.ICategoryRepository, { useClass: CategoryMongooseRepository }, { lifecycle: Lifecycle.ContainerScoped });
+
+
 }
 else if (defaultDbConfig === 'MikroORM')
 {

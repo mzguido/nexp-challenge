@@ -11,6 +11,8 @@ import NotificationMongooseDocument from '../../../Notification/Infrastructure/S
 import ITokenMongooseDocument from '../../../Auth/Infrastructure/Schemas/ITokenMongooseDocument';
 
 import ItemSchema from '../../../Item/Infrastructure/Schemas/ItemMongoose';
+import CategorySchema from '../../../Category/Infrastructure/Schemas/CategoryMongoose';
+
 
 import RoleSchema from '../../../Auth/Infrastructure/Schemas/RoleMongoose';
 import UserSchema from '../../../Auth/Infrastructure/Schemas/UserMongoose';
@@ -24,6 +26,8 @@ import TokenSchema from '../../../Auth/Infrastructure/Schemas/TokenMongoose';
 import ICreateConnection from './ICreateConnection';
 import FileMongooseDocument from '../../../File/Infrastructure/Schemas/FileMongooseDocument';
 import FileSchema from '../../../File/Infrastructure/Schemas/FileMongoose';
+
+import CategoryMongooseDocument from 'Category/Infrastructure/Schemas/CategoryMongooseDocument';
 
 export let connection: mongoose.Connection | null = null;
 
@@ -74,6 +78,11 @@ class CreateMongooseConnection implements ICreateConnection
         connection.model<ItemMongooseDocument>('Item', ItemSchema);
         connection.model<FileVersionMongooseDocument>('FileVersion', FileVersionSchema);
         connection.model<FileMongooseDocument>('File', FileSchema);
+
+        connection.model<CategoryMongooseDocument>('Category', CategorySchema);
+        // connection.model<ProductMongooseDocument>('Product', ProductSchema);
+
+
 
         // Infrastructure
         const NotificationModel = connection.model<NotificationMongooseDocument>('Notification', NotificationSchema);

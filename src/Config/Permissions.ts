@@ -15,6 +15,20 @@ class Permissions
     static readonly ITEMS_LIST: string = 'itemsList';
     static readonly ITEMS_DELETE: string = 'itemsDelete';
 
+    // PRODUCTS
+    static readonly PRODUCTS_SAVE: string = 'productsSave';
+    static readonly PRODUCTS_UPDATE: string = 'productspdate';
+    static readonly PRODUCTS_SHOW: string = 'productsShow';
+    static readonly PRODUCTS_LIST: string = 'productsList';
+    static readonly PRODUCTS_DELETE: string = 'productsDelete';
+
+     // CATEGORIES
+     static readonly CATEGORIES_SAVE: string = 'categoriesSave';
+     static readonly CATEGORIES_UPDATE: string = 'categoriespdate';
+     static readonly CATEGORIES_SHOW: string = 'categoriesShow';
+     static readonly CATEGORIES_LIST: string = 'categoriesList';
+     static readonly CATEGORIES_DELETE: string = 'categoriesDelete';
+
     // USERS
     static readonly USERS_SAVE: string = 'usersSave';
     static readonly USERS_UPDATE: string = 'usersUpdate';
@@ -58,6 +72,16 @@ class Permissions
                     Permissions.ITEMS_SHOW,
                     Permissions.ITEMS_LIST,
                     Permissions.ITEMS_DELETE
+                ]
+            },
+            {
+                group: 'CATEGORIES',
+                permissions: [
+                    Permissions.CATEGORIES_SAVE,
+                    Permissions.CATEGORIES_UPDATE,
+                    Permissions.CATEGORIES_SHOW,
+                    Permissions.CATEGORIES_LIST,
+                    Permissions.CATEGORIES_DELETE
                 ]
             },
             {

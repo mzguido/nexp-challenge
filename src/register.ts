@@ -15,7 +15,7 @@ import IRoleRepository from './Auth/Infrastructure/Repositories/IRoleRepository'
 import IItemRepository from './Item/Infrastructure/Repositories/IItemRepository';
 
 import ICategoryRepository from "./Category/Infrastructure/Repositories/ICategoryRepository";
-// import IProductRepository from "./Product/Infrastructure/Repositories"
+import IProductRepository from "./Product/Infrastructure/Repositories/IProductRepository"
 
 import IFileVersionRepository from './File/Infrastructure/Repositories/IFileVersionRepository';
 import INotificationRepository from './Notification/Infrastructure/Repositories/INotificationRepository';
@@ -29,6 +29,7 @@ import ItemMongooseRepository from './Item/Infrastructure/Repositories/ItemMongo
 import NotificationMongooseRepository from './Notification/Infrastructure/Repositories/NotificationMongooseRepository';
 
 import CategoryMongooseRepository from './Category/Infrastructure/Repositories/CategoryMongooseRepository';
+import ProductMongooseRepository from './Product/Infrastructure/Repositories/ProductMongooseRepository';
 
 
 import UserTypeORMRepository from './Auth/Infrastructure/Repositories/UserTypeORMRepository';
@@ -73,6 +74,7 @@ else if (defaultDbConfig === 'Mongoose')
     container.register<INotificationRepository<INotificationDomain>>(REPOSITORIES.INotificationRepository, { useClass: NotificationMongooseRepository }, { lifecycle: Lifecycle.ContainerScoped });
 
     container.register<ICategoryRepository>(REPOSITORIES.ICategoryRepository, { useClass: CategoryMongooseRepository }, { lifecycle: Lifecycle.ContainerScoped });
+    container.register<IProductRepository>(REPOSITORIES.IProductRepository, { useClass: ProductMongooseRepository }, { lifecycle: Lifecycle.ContainerScoped });
 
 
 }

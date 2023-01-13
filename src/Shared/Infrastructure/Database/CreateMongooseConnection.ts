@@ -12,6 +12,7 @@ import ITokenMongooseDocument from '../../../Auth/Infrastructure/Schemas/ITokenM
 
 import ItemSchema from '../../../Item/Infrastructure/Schemas/ItemMongoose';
 import CategorySchema from '../../../Category/Infrastructure/Schemas/CategoryMongoose';
+import ProductSchema from '../../../Product/Infrastructure/Schemas/ProductMongoose';
 
 
 import RoleSchema from '../../../Auth/Infrastructure/Schemas/RoleMongoose';
@@ -28,6 +29,8 @@ import FileMongooseDocument from '../../../File/Infrastructure/Schemas/FileMongo
 import FileSchema from '../../../File/Infrastructure/Schemas/FileMongoose';
 
 import CategoryMongooseDocument from 'Category/Infrastructure/Schemas/CategoryMongooseDocument';
+import ProductMongooseDocument from 'Product/Infrastructure/Schemas/ProductMongooseDocument';
+
 
 export let connection: mongoose.Connection | null = null;
 
@@ -80,7 +83,7 @@ class CreateMongooseConnection implements ICreateConnection
         connection.model<FileMongooseDocument>('File', FileSchema);
 
         connection.model<CategoryMongooseDocument>('Category', CategorySchema);
-        // connection.model<ProductMongooseDocument>('Product', ProductSchema);
+        connection.model<ProductMongooseDocument>('Product', ProductSchema);
 
 
 

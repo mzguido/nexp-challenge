@@ -2,9 +2,9 @@ import IProductDomain from '../../Domain/Entities/IProductDomain'
 
 import SaveProductUseCase from '../../Domain/UseCases/SaveProductUseCase';
 import ListProductsUseCase from '../../Domain/UseCases/ListProductsUseCase';
-// import GetItemUseCase from '../../Domain/UseCases/GetItemUseCase';
-// import RemoveItemUseCase from '../../Domain/UseCases/RemoveItemUseCase';
-// import UpdateItemUseCase from '../../Domain/UseCases/UpdateItemUseCase';
+import GetProductUseCase from '../../Domain/UseCases/GetProductUseCase';
+import RemoveProductUseCase from '../../Domain/UseCases/RemoveProductUseCase';
+import UpdateProductUseCase from '../../Domain/UseCases/UpdateProductUseCase';
 import ValidatorSchema from '../../../Shared/Presentation/Shared/ValidatorSchema';
 import ProductRepPayload from '../../Domain/Payloads/ProductRepPayload';
 import IdPayload from '../../../Shared/Presentation/Requests/IdPayload';
@@ -59,29 +59,29 @@ class ProductController
         return await useCase.handle(payload);
     }
 
-    // public async getOne(payload: IdPayload): Promise<ICategoryDomain>
-    // {
-    //     await ValidatorSchema.handle(IdSchemaValidation, payload);
+    public async getOne(payload: IdPayload): Promise<IProductDomain>
+    {
+        await ValidatorSchema.handle(IdSchemaValidation, payload);
 
-    //     const useCase = new GetItemUseCase();
-    //     return await useCase.handle(payload);
-    // }
+        const useCase = new GetProductUseCase();
+        return await useCase.handle(payload);
+    }
 
-    // public async update(payload: ItemUpdatePayload): Promise<ICategoryDomain>
-    // {
-    //     await ValidatorSchema.handle(ItemSchemaUpdateValidation, payload);
+    public async update(payload: ProductUpdatePayload): Promise<IProductDomain>
+    {
+        await ValidatorSchema.handle(ProductSchemaUpdateValidation, payload);
 
-    //     const useCase = new UpdateItemUseCase();
-    //     return await useCase.handle(payload);
-    // }
+        const useCase = new UpdateProductUseCase();
+        return await useCase.handle(payload);
+    }
 
-    // public async remove(payload: IdPayload): Promise<ICategoryDomain>
-    // {
-    //     await ValidatorSchema.handle(IdSchemaValidation, payload);
+    public async remove(payload: IdPayload): Promise<IProductDomain>
+    {
+        await ValidatorSchema.handle(IdSchemaValidation, payload);
 
-    //     const useCase = new RemoveItemUseCase();
-    //     return await useCase.handle(payload);
-    // }
+        const useCase = new RemoveProductUseCase();
+        return await useCase.handle(payload);
+    }
 }
 
 export default ProductController;

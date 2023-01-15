@@ -14,7 +14,8 @@ import DefaultMessageTransformer from '../../../Shared/Presentation/Transformers
 import ProductRepPayload from '../../Domain/Payloads/ProductRepPayload';
 import CriteriaPayload from '../../../Shared/Presentation/Validations/CriteriaPayload';
 import IdPayload from '../../../Shared/Presentation/Requests/IdPayload';
-// import ItemUpdatePayload from '../../Domain/Payloads/ItemUpdatePayload';
+import ProductUpdatePayload from '../../Domain/Payloads/ProductUpdatePayload';
+
 
 import IProductDomain from '../../Domain/Entities/IProductDomain';
 import ProductAssignCategoryPayload from '../../Domain/Payloads/AssignCategoryPayload';
@@ -27,7 +28,7 @@ const ProductHandler: Router = new Router(routerOpts);
 const responder: KoaResponder = new KoaResponder();
 const controller: ProductController = new ProductController();
 
-ProductHandler.post('/', AuthorizeKoaMiddleware(Permissions.ITEMS_SAVE), async(ctx: DefaultContext) =>
+ProductHandler.post('/', AuthorizeKoaMiddleware(Permissions.PRODUCTS_SAVE), async(ctx: DefaultContext) =>
 {
     const data: ProductRepPayload = {
         authUser: AuthUser(ctx),
@@ -49,7 +50,6 @@ ProductHandler.get('/', AuthorizeKoaMiddleware(Permissions.PRODUCTS_LIST), async
     const paginator: IPaginator = await controller.list(data);
 
     await responder.paginate(paginator, ctx, StatusCode.HTTP_OK, new ProductTransformer());
-    // void await responder.send(data, ctx, StatusCode.HTTP_CREATED, new DefaultMessageTransformer("aun no hay productos" as ResponseMessageEnum));
 });
 
 ProductHandler.put('/assign-category/:id', AuthorizeKoaMiddleware(Permissions.PRODUCTS_SAVE), async(ctx: DefaultContext) =>
@@ -64,31 +64,31 @@ ProductHandler.put('/assign-category/:id', AuthorizeKoaMiddleware(Permissions.PR
     void await responder.send(product, ctx, StatusCode.HTTP_CREATED, new DefaultMessageTransformer(ResponseMessageEnum.UPDATED));
 });
 
-// ItemKoaHandler.get('/:id', AuthorizeKoaMiddleware(Permissions.ITEMS_SHOW), async(ctx: DefaultContext) =>
-// {
-//     const item = await controller.getOne(ctx.params as IdPayload);
+ProductHandler.get('/:id', AuthorizeKoaMiddleware(Permissions.PRODUCTS_SHOW), async(ctx: DefaultContext) =>
+{
+    const products = await controller.getOne(ctx.params as IdPayload);
 
-//     void await responder.send(item, ctx, StatusCode.HTTP_OK, new ItemTransformer());
-// });
+    void await responder.send(products, ctx, StatusCode.HTTP_OK, new ProductTransformer());
+});
 
-// ItemKoaHandler.put('/:id', AuthorizeKoaMiddleware(Permissions.ITEMS_UPDATE), async(ctx: DefaultContext) =>
-// {
-//     const data: ItemUpdatePayload = {
-//         id: ctx.params.id,
-//         authUser: AuthUser(ctx),
-//         ...ctx.request.body
-//     };
+ProductHandler.put('/:id', AuthorizeKoaMiddleware(Permissions.PRODUCTS_UPDATE), async(ctx: DefaultContext) =>
+{
+    const data: ProductUpdatePayload = {
+        id: ctx.params.id,
+        authUser: AuthUser(ctx),
+        ...ctx.request.body
+    };
 
-//     const item = await controller.update(data);
+    const product = await controller.update(data);
 
-//     void await responder.send(item, ctx, StatusCode.HTTP_CREATED, new DefaultMessageTransformer(ResponseMessageEnum.UPDATED));
-// });
+    void await responder.send(product, ctx, StatusCode.HTTP_CREATED, new DefaultMessageTransformer(ResponseMessageEnum.UPDATED));
+});
 
-// ItemKoaHandler.delete('/:id', AuthorizeKoaMiddleware(Permissions.ITEMS_DELETE), async(ctx: DefaultContext) =>
-// {
-//     const item = await controller.remove(ctx.params as IdPayload);
+ProductHandler.delete('/:id', AuthorizeKoaMiddleware(Permissions.ITEMS_DELETE), async(ctx: DefaultContext) =>
+{
+    const item = await controller.remove(ctx.params as IdPayload);
 
-//     void await responder.send(item, ctx, StatusCode.HTTP_CREATED, new ItemTransformer());
-// });
+    void await responder.send(item, ctx, StatusCode.HTTP_CREATED, new ProductTransformer());
+});
 
 export default ProductHandler;

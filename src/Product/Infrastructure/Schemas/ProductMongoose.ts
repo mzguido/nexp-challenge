@@ -5,6 +5,7 @@ import { uuid } from '@deepkit/type';
 const ProductSchema: any = new Schema<Product>({
     _id: { type: String, default: uuid },
     title: { type: String, required: true },
+    price: { type: Number, required: true },
     enable: { type: Boolean, required: true },
     category :{ type: Schema.Types.String, ref: 'Category' },
     createdBy: { type: Schema.Types.String, ref: 'User' },

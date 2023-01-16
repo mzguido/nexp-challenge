@@ -5,7 +5,7 @@ import StatusCode from '../../../Shared/Application/StatusCode';
 import IPaginator from '../../../Shared/Infrastructure/Orm/IPaginator';
 import KoaResponder from '../../../Shared/Application/Http/KoaResponder';
 import CategoryController from '../Controllers/CategoryController';
-// import ItemTransformer from '../Transformers/ItemTransformer';
+// import CategoryTransformer from '../Transformers/CategoryTransformer';
 import { AuthUser } from '../../../Auth/Presentation/Helpers/AuthUser';
 import AuthorizeKoaMiddleware from '../../../Auth/Presentation/Middlewares/AuthorizeKoaMiddleware';
 import Permissions from '../../../Config/Permissions';
@@ -47,34 +47,33 @@ CategoryHandler.get('/', AuthorizeKoaMiddleware(Permissions.CATEGORIES_LIST), as
     const paginator: IPaginator = await controller.list(data);
 
     await responder.paginate(paginator, ctx, StatusCode.HTTP_OK, new CategoryTransformer());
-    // void await responder.send(data, ctx, StatusCode.HTTP_CREATED, new DefaultMessageTransformer("aun no hay categorias" as ResponseMessageEnum));
 });
 
-// ItemKoaHandler.get('/:id', AuthorizeKoaMiddleware(Permissions.ITEMS_SHOW), async(ctx: DefaultContext) =>
-// {
-//     const item = await controller.getOne(ctx.params as IdPayload);
+CategoryHandler.get('/:id', AuthorizeKoaMiddleware(Permissions.ITEMS_SHOW), async(ctx: DefaultContext) =>
+{
+    const category = await controller.getOne(ctx.params as IdPayload);
 
-//     void await responder.send(item, ctx, StatusCode.HTTP_OK, new ItemTransformer());
-// });
+    void await responder.send(category, ctx, StatusCode.HTTP_OK, new CategoryTransformer());
+});
 
-// ItemKoaHandler.put('/:id', AuthorizeKoaMiddleware(Permissions.ITEMS_UPDATE), async(ctx: DefaultContext) =>
-// {
-//     const data: ItemUpdatePayload = {
-//         id: ctx.params.id,
-//         authUser: AuthUser(ctx),
-//         ...ctx.request.body
-//     };
+CategoryHandler.put('/:id', AuthorizeKoaMiddleware(Permissions.ITEMS_UPDATE), async(ctx: DefaultContext) =>
+{
+    const data: CategoryUpdatePayload = {
+        id: ctx.params.id,
+        authUser: AuthUser(ctx),
+        ...ctx.request.body
+    };
 
-//     const item = await controller.update(data);
+    const category = await controller.update(data);
 
-//     void await responder.send(item, ctx, StatusCode.HTTP_CREATED, new DefaultMessageTransformer(ResponseMessageEnum.UPDATED));
-// });
+    void await responder.send(category, ctx, StatusCode.HTTP_CREATED, new DefaultMessageTransformer(ResponseMessageEnum.UPDATED));
+});
 
-// ItemKoaHandler.delete('/:id', AuthorizeKoaMiddleware(Permissions.ITEMS_DELETE), async(ctx: DefaultContext) =>
-// {
-//     const item = await controller.remove(ctx.params as IdPayload);
+CategoryHandler.delete('/:id', AuthorizeKoaMiddleware(Permissions.ITEMS_DELETE), async(ctx: DefaultContext) =>
+{
+    const category = await controller.remove(ctx.params as IdPayload);
 
-//     void await responder.send(item, ctx, StatusCode.HTTP_CREATED, new ItemTransformer());
-// });
+    void await responder.send(category, ctx, StatusCode.HTTP_CREATED, new CategoryTransformer());
+});
 
 export default CategoryHandler;

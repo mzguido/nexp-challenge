@@ -2,13 +2,13 @@ import ICategoryDomain from '../../Domain/Entities/ICategoryDomain'
 
 import SaveCategoryUseCase from '../../Domain/UseCases/SaveCategoryUseCase';
 import ListCategoriesUseCase from '../../Domain/UseCases/ListCategoriesUseCase';
-// import GetItemUseCase from '../../Domain/UseCases/GetItemUseCase';
-// import RemoveItemUseCase from '../../Domain/UseCases/RemoveItemUseCase';
-// import UpdateItemUseCase from '../../Domain/UseCases/UpdateItemUseCase';
+import GetCategoryUseCase from '../../Domain/UseCases/GetCategoryUseCase';
+import RemoveCategoryUseCase from '../../Domain/UseCases/RemoveCategoryUseCase';
+import UpdateCategoryUseCase from '../../Domain/UseCases/UpdateCategoryUseCase';
 import ValidatorSchema from '../../../Shared/Presentation/Shared/ValidatorSchema';
 import CategoryRepPayload from '../../Domain/Payloads/CategoryRepPayload';
 import IdPayload from '../../../Shared/Presentation/Requests/IdPayload';
-import ItemUpdatePayload from '../../Domain/Payloads/CategoryUpdatePayload';
+import CategoryUpdatePayload from '../../Domain/Payloads/CategoryUpdatePayload';
 import ICriteria from '../../../Shared/Presentation/Requests/ICriteria';
 import IPaginator from '../../../Shared/Infrastructure/Orm/IPaginator';
 import CategorySchemaSaveValidation from '../Validations/CategorySchemaSaveValidation';
@@ -46,29 +46,29 @@ class CategoryController
         return await useCase.handle(requestCriteria);
     }
 
-    // public async getOne(payload: IdPayload): Promise<ICategoryDomain>
-    // {
-    //     await ValidatorSchema.handle(IdSchemaValidation, payload);
+    public async getOne(payload: IdPayload): Promise<ICategoryDomain>
+    {
+        await ValidatorSchema.handle(IdSchemaValidation, payload);
 
-    //     const useCase = new GetItemUseCase();
-    //     return await useCase.handle(payload);
-    // }
+        const useCase = new GetCategoryUseCase();
+        return await useCase.handle(payload);
+    }
 
-    // public async update(payload: ItemUpdatePayload): Promise<ICategoryDomain>
-    // {
-    //     await ValidatorSchema.handle(ItemSchemaUpdateValidation, payload);
+    public async update(payload: CategoryUpdatePayload): Promise<ICategoryDomain>
+    {
+        await ValidatorSchema.handle(CategorySchemaUpdateValidation, payload);
 
-    //     const useCase = new UpdateItemUseCase();
-    //     return await useCase.handle(payload);
-    // }
+        const useCase = new UpdateCategoryUseCase();
+        return await useCase.handle(payload);
+    }
 
-    // public async remove(payload: IdPayload): Promise<ICategoryDomain>
-    // {
-    //     await ValidatorSchema.handle(IdSchemaValidation, payload);
+    public async remove(payload: IdPayload): Promise<ICategoryDomain>
+    {
+        await ValidatorSchema.handle(IdSchemaValidation, payload);
 
-    //     const useCase = new RemoveItemUseCase();
-    //     return await useCase.handle(payload);
-    // }
+        const useCase = new RemoveCategoryUseCase();
+        return await useCase.handle(payload);
+    }
 }
 
 export default CategoryController;
